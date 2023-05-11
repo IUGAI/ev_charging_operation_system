@@ -67,7 +67,7 @@ class _TextFieldWidgetState extends State<PassportFieldWidget> {
           hintStyle: loginText,
           border: InputBorder.none,
           contentPadding:
-          EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+          EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         ),
       ),
     );

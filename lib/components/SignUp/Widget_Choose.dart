@@ -33,7 +33,7 @@ class Wudget_choose extends StatelessWidget {
               DropdownMenuItem<String>(
                 value: '',
                 child: Text('선택',style: TextStyle(color: Colors.grey, fontSize:  screenWidth > 900 || screenWidth > 600 ? 23 : 15)),
-                enabled: false,
+                enabled: true,
               ),
               DropdownMenuItem<String>(
                   value: '4',

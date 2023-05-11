@@ -17,6 +17,7 @@ class Widgetofname extends StatelessWidget {
     final double screenWidth = screenSize.width;
     final stringprovider = Provider.of<DataMulti>(context);
     return Container(
+      margin: EdgeInsets.symmetric(horizontal: 20),
       height:  screenWidth > 900 || screenWidth > 600 ? 60 : 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -33,7 +34,7 @@ class Widgetofname extends StatelessWidget {
             DropdownMenuItem<String>(
               value: '1',
               child: Text('선택',style: TextStyle(color: Colors.grey, fontSize:  screenWidth > 900 || screenWidth > 600 ? 20 : 15)),
-              enabled: false,
+              enabled: true,
             ),
             DropdownMenuItem<String>(
                 value: '98',

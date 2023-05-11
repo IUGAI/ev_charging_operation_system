@@ -184,7 +184,7 @@ class _FindPasswordBlockState extends State<FindPasswordBlock> {
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintStyle: screenWidth > 900 || screenWidth > 600 ? loginText_l : loginText,
-                hintText: '휴대폰 입략해주세요',
+                hintText: '휴대폰 입력해주세요',
                 border: InputBorder.none,
                 contentPadding:
                 EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
