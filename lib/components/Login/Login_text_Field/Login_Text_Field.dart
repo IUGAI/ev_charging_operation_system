@@ -14,6 +14,7 @@ class TextFiedLogin extends StatelessWidget {
     final double screenHeight = screenSize.height;
     final double screenWidth = screenSize.width;
     return Container(
+      height: screenWidth > 900 || screenWidth > 600 ? 60 : 50,
       margin: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),

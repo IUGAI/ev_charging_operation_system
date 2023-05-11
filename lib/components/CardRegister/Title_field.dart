@@ -15,7 +15,7 @@ class Title_field extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Container(
           child: Text(
-            "충전시 사용하실 충전가트를 선택해주세요",
+            "충전시 사용하실 충전카트를 선택해주세요",
             style: TextStyle(
                 color: Color(0xffd0d9e4),
                 fontSize:  screenWidth > 900 || screenWidth > 600 ? 23  : 15,

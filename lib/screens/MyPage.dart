@@ -25,52 +25,57 @@ class _MyPageState extends State<MyPage> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenHeight = screenSize.height;
     final double screenWidth = screenSize.width;
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff3a475c),
-        automaticallyImplyLeading: false,
-        title: Text("NBplug", style: TextStyle(fontSize:  screenWidth > 900 || screenWidth > 600  ? 23 : 15),),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.logout, size:  screenWidth > 900 || screenWidth > 600 ? 30 : 24,),
-            onPressed: () async {
-               String token = stringprovider.refreshtokken;
-               final dio = Dio();
-               final url = 'http://139.150.72.173:3000/auth/logout';
+    return WillPopScope(
+      onWillPop: () {
+        return Future(()=>false);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xff3a475c),
+          automaticallyImplyLeading: false,
+          title: Text("NBplug", style: TextStyle(fontSize:  screenWidth > 900 || screenWidth > 600  ? 23 : 15),),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout, size:  screenWidth > 900 || screenWidth > 600 ? 30 : 24,),
+              onPressed: () async {
+                 String token = stringprovider.refreshtokken;
+                 final dio = Dio();
+                 final url = 'http://139.150.72.173:3000/auth/logout';
 
-               try {
-                 final response = await dio.delete(
-                   url,
-                   data:  {
-                     "refreshToken" : token
-                   },
-                 );
-                 Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                     builder: (context) {
-                       return Login();
+                 try {
+                   final response = await dio.delete(
+                     url,
+                     data:  {
+                       "refreshToken" : token
                      },
-                   ),
-                 );
-               } catch (e) {
-                 print(e);
-               }
-            },
-          )
-        ],
-      ),
-      body: WillPopScope(
-        onWillPop: () async {
-          if (Navigator.of(context).userGestureInProgress)
-            return false;
-          else
-            return true;
-        },
-        child: Container(
-          color: Color(0xff26303f),
-          child:  Center(
-            child : MyPageBlock(datass: widget.data, datas: 'charge', chargedata: widget.chargedata,unpaiddata:  widget.unpaid,),
+                   );
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(
+                       builder: (context) {
+                         return Login();
+                       },
+                     ),
+                   );
+                 } catch (e) {
+                   print(e);
+                 }
+              },
+            )
+          ],
+        ),
+        body: WillPopScope(
+          onWillPop: () async {
+            if (Navigator.of(context).userGestureInProgress)
+              return false;
+            else
+              return true;
+          },
+          child: Container(
+            color: Color(0xff26303f),
+            child:  Center(
+              child : MyPageBlock(datass: widget.data, datas: 'charge', chargedata: widget.chargedata,unpaiddata:  widget.unpaid,),
+            ),
           ),
         ),
       ),
