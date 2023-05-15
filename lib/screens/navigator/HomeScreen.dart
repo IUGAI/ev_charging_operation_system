@@ -21,7 +21,14 @@ bool inkmisclicked = false;
 bool chargertypeisclicked = false;
 bool bussinessisclicked = false;
 
-final List<String> _dropdownValueslm = ["범위", "1km", "5km", "10km", "20km","30km"];
+final List<String> _dropdownValueslm = [
+  "범위",
+  "1km",
+  "5km",
+  "10km",
+  "20km",
+  "30km"
+];
 
 final List<String> _dropdownValues = ["충전기", "1대이상", "1대이상", "1대이상", "상관없음"];
 
@@ -94,7 +101,6 @@ class _MyScreenState extends State<HomeScreen> {
       dio.options.connectTimeout = Duration(seconds: 5);
 
       Response response = await dio.get(
-          
           'http://192.168.77.172:5000/distance/chstation',
           queryParameters: {
             'lat1': '37.52126',
@@ -760,11 +766,9 @@ class _MyScreenState extends State<HomeScreen> {
                                     print('not checked');
                                   }
                                   if (isclicked10) {
-                                    fetchFilterData('DC콤보');
                                     datafilter = 'DC콤보';
-                                    print('DC콤보');
                                     if (isclicked10 && isclicked11) {
-                                      datafilter = 'DC콤보' + ' ' + 'DC차데모';
+                                      datafilter = 'DC콤보' + ',' + 'DC차데모';
                                     }
                                   } else if (isclicked11) {
                                     fetchFilterData('DC차데모');
@@ -777,6 +781,7 @@ class _MyScreenState extends State<HomeScreen> {
                                     fetchData();
                                     datafilter = '';
                                   }
+                                  fetchFilterData(datafilter);
                                   print(datafilter);
                                 });
                               });
