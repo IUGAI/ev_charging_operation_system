@@ -94,6 +94,7 @@ class _MyScreenState extends State<HomeScreen> {
       dio.options.connectTimeout = Duration(seconds: 5);
 
       Response response = await dio.get(
+          
           'http://192.168.77.172:5000/distance/chstation',
           queryParameters: {
             'lat1': '37.52126',
