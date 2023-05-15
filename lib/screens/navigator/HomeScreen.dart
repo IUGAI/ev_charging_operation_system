@@ -21,7 +21,7 @@ bool inkmisclicked = false;
 bool chargertypeisclicked = false;
 bool bussinessisclicked = false;
 
-final List<String> _dropdownValueslm = ["범위", "1km", "5km", "10km", "20km"];
+final List<String> _dropdownValueslm = ["범위", "1km", "5km", "10km", "20km","30km"];
 
 final List<String> _dropdownValues = ["충전기", "1대이상", "1대이상", "1대이상", "상관없음"];
 
@@ -446,7 +446,7 @@ class _MyScreenState extends State<HomeScreen> {
                                           text: '상세보기',
                                         ),
                                         SizedBox(
-                                          width: 25,
+                                          width: 20,
                                         ),
                                         ButtonWidget2(
                                           text: '지도에서 보기',
