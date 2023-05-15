@@ -318,7 +318,7 @@ class _MyScreenState extends State<HomeScreen> {
                                   Divider(color: Color(0xff808080)),
                                   Container(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
+                                        EdgeInsets.symmetric(horizontal: 5),
                                     child: Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -334,7 +334,7 @@ class _MyScreenState extends State<HomeScreen> {
                                             child: Text(myData.chargename,
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 16,
+                                                    fontSize: 15,
                                                     fontFamily: "InterSemiBold",
                                                     fontWeight:
                                                         FontWeight.w600))),
@@ -343,7 +343,7 @@ class _MyScreenState extends State<HomeScreen> {
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: "InterSemiBold",
-                                                fontSize: 16,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.w100)),
                                       ],
                                     ),
@@ -763,7 +763,8 @@ class _MyScreenState extends State<HomeScreen> {
                                     datafilter = 'DC콤보';
                                     print('DC콤보');
                                     if (isclicked10 && isclicked11) {
-                                      datafilter = 'DC콤보' + ' ' + 'DC차데모';
+                                      datafilter = 'DC콤보' + ',' + 'DC차데모';
+                                      fetchFilterData(datafilter);
                                     }
                                   } else if (isclicked11) {
                                     fetchFilterData('DC차데모');
