@@ -2,6 +2,7 @@ import 'package:ev_charging_operation_system/components/MyAppGuideBlock.dart';
 import 'package:ev_charging_operation_system/components/SignUp/Widget_of_Name.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:ev_charging_operation_system/components/LoginBlock.dart';
 import 'package:ev_charging_operation_system/constant/constant.dart';
 
@@ -9,8 +10,7 @@ import '../../components/AlertWidget.dart';
 
 enum Distance { none, onekm, fivekm, tenkm, twenty }
 
-
-enum Distanceisopen {open, close}
+enum Distanceisopen { open, close }
 
 Distanceisopen distanceisopen = Distanceisopen.close;
 Distance distance = Distance.none;
@@ -31,6 +31,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _MyScreenState extends State<HomeScreen> {
+  String datafilter = '';
   List<MyData> myDataList = [];
   bool isLoading = false;
   bool isFilter = false;
@@ -76,7 +77,35 @@ class _MyScreenState extends State<HomeScreen> {
             response.data['data'].map((data) => MyData.fromJson(data)));
       });
     } catch (error) {
-      print(error.toString());
+      print('Error message: $error');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  Future<void> fetchFilterData(String filter) async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final dio = Dio();
+      dio.options.connectTimeout = Duration(seconds: 5);
+
+      Response response = await dio.get(
+          'http://192.168.77.172:5000/distance/chstation',
+          queryParameters: {
+            'lat1': '37.52126',
+            'lon1': '126.91327',
+            'filter': filter
+          });
+      setState(() {
+        myDataList = List<MyData>.from(
+            response.data['data'].map((data) => MyData.fromJson(data)));
+      });
+    } catch (error) {
+      print('Error message: $error');
     } finally {
       setState(() {
         isLoading = false;
@@ -227,7 +256,7 @@ class _MyScreenState extends State<HomeScreen> {
                         isclicked: inkmisclicked,
                         function: () {
                           setState(() {
-                             distanceisopen = Distanceisopen.open;
+                            distanceisopen = Distanceisopen.open;
                           });
                           return showMyDialogerror(context);
                         },
@@ -719,15 +748,35 @@ class _MyScreenState extends State<HomeScreen> {
                                   isclicked17 = isclicked8;
                                   isclicked18 = isclicked9;
 
-                                  print(isclicked10);
-                                  print(isclicked11);
-                                  print(isclicked12);
-                                  print(isclicked13);
-                                  print(isclicked14);
-                                  print(isclicked15);
-                                  print(isclicked16);
-                                  print(isclicked17);
-                                  print(isclicked18);
+                                  if ([
+                                    isclicked1,
+                                    isclicked2,
+                                    isclicked3,
+                                    isclicked4
+                                  ].any((element) => true)) {
+                                    print('checked');
+                                  } else {
+                                    print('not checked');
+                                  }
+                                  if (isclicked10) {
+                                    fetchFilterData('DC콤보');
+                                    datafilter = 'DC콤보';
+                                    print('DC콤보');
+                                    if (isclicked10 && isclicked11) {
+                                      datafilter = 'DC콤보' + ' ' + 'DC차데모';
+                                    }
+                                  } else if (isclicked11) {
+                                    fetchFilterData('DC차데모');
+                                    datafilter = 'DC차데모';
+                                  } else if (isclicked13) {
+                                    fetchFilterData('AC3상');
+                                  } else if (isclicked12) {
+                                    fetchFilterData('AC완속');
+                                  } else {
+                                    fetchData();
+                                    datafilter = '';
+                                  }
+                                  print(datafilter);
                                 });
                               });
                             },
@@ -1018,7 +1067,9 @@ class _DropDownWidgetState extends State<DropDownWidget> {
         height: 30,
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
-          color: distanceisopen == Distanceisopen.open ? Color(0xff71809B) : Color(0xff26303F),
+          color: distanceisopen == Distanceisopen.open
+              ? Color(0xff71809B)
+              : Color(0xff26303F),
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(
               color: Color(0xff71809B), style: BorderStyle.solid, width: 2),
@@ -1030,7 +1081,9 @@ class _DropDownWidgetState extends State<DropDownWidget> {
             Text(
               widget.title,
               style: TextStyle(
-                color: distanceisopen == Distanceisopen.open  ? Colors.white : Color(0xff71809B),
+                color: distanceisopen == Distanceisopen.open
+                    ? Colors.white
+                    : Color(0xff71809B),
                 fontWeight: FontWeight.w600,
                 fontFamily: "InterSemiBold",
               ),
