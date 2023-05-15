@@ -33,7 +33,7 @@ class _MainScreensState extends State<MainScreens> {
         backgroundColor: Color(0xff3a475c),
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xff26303F),
+        selectedItemColor: Color(0xffffffff),
         unselectedItemColor: Color(0xff71809B),
         onTap: (index) {
           setState(() {
@@ -42,15 +42,15 @@ class _MainScreensState extends State<MainScreens> {
         },
         items: [
           const BottomNavigationBarItem(
-              label: '홈', icon: Icon(CupertinoIcons.home, color: Color(0xff71809B),size: 30,)),
+              label: '홈', icon: Icon(CupertinoIcons.home, color: Color(0xff71809B),size: 25,)),
           const BottomNavigationBarItem(
-              label: '지도', icon: Icon(CupertinoIcons.placemark, color: Color(0xff71809B),size: 30)),
+              label: '지도', icon: Icon(CupertinoIcons.placemark, color: Color(0xff71809B),size: 25)),
           const BottomNavigationBarItem(
-              label: '즐겨찾기', icon: Icon(CupertinoIcons.star,color: Color(0xff71809B),size: 30)),
+              label: '즐겨찾기', icon: Icon(CupertinoIcons.star,color: Color(0xff71809B),size: 25)),
           // const BottomNavigationBarItem(
           //     label: '결제', icon: Icon(CupertinoIcons.square)),
           const BottomNavigationBarItem(
-              label: '네정보', icon: Icon(CupertinoIcons.person,color: Color(0xff71809B),size: 30)),
+              label: '네정보', icon: Icon(CupertinoIcons.person,color: Color(0xff71809B),size: 25)),
         ],
       ),
     );
