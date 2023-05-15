@@ -1,7 +1,10 @@
+import 'package:ev_charging_operation_system/components/AlertWidget.dart';
 import 'package:flutter/material.dart';
 
+import '../../constant/constant.dart';
 
-class CheckBox_Block extends StatelessWidget {
+
+class CheckBox_Block extends StatefulWidget {
   const CheckBox_Block({
     Key? key,
     required bool isChecked,
@@ -9,6 +12,11 @@ class CheckBox_Block extends StatelessWidget {
 
   final bool _isChecked;
 
+  @override
+  State<CheckBox_Block> createState() => _CheckBox_BlockState();
+}
+
+class _CheckBox_BlockState extends State<CheckBox_Block> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -24,16 +32,42 @@ class CheckBox_Block extends StatelessWidget {
              fontSize: screenWidth > 900 || screenWidth > 600 ? 20 : 15,
               color: Colors.white
           ),),
-          Checkbox(
-            activeColor: Colors.blue, // set the color of the checkbox when it is checked
-            checkColor: Colors.white,
-            value: _isChecked,
-            onChanged: (bool? value) {
-
-            },
-          )
+            Row(children: [
+            // Container(
+            //   height: 20,
+            //   child: ElevatedButton(
+            //       style: ElevatedButton.styleFrom(
+            //           backgroundColor: Color(0xff73829E)),
+            //       onPressed: () {
+            //             return showMyDialog(context, textagreement);
+            //       },
+            //       child: const Text('전문보기')),
+            // ),
+            Checkbox(
+              activeColor: Colors
+                  .blue, // set the color of the checkbox when it is checked
+              checkColor: Colors.white,
+              value: widget._isChecked,
+              onChanged: (bool? value) {
+                setState(() {
+        
+                });
+              },
+            ),
+          ])
         ],
       ),
     );
   }
+}
+
+void showMyDialog(BuildContext context, String msg) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return  AlertShowAgreementBlockscss(message: msg, function: (){
+              Navigator.pop(context);
+      });
+    },
+  );
 }

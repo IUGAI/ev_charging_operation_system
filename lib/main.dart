@@ -1,3 +1,4 @@
+import 'package:ev_charging_operation_system/screens/MainNavigator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: MainScreens(),
     );
   }
 }

@@ -372,7 +372,7 @@ class _MyPageBlockState extends State<MyPageBlock> {
                 CancelButtonCard(
                   function: () {
                     setState(() {
-                      selectednav = Navigators.mycardchange;
+                      selectednav = Navigators.my_info;
                     });
                   },
                 )
