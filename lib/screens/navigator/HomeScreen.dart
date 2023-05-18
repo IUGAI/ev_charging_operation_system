@@ -1,5 +1,6 @@
 import 'package:ev_charging_operation_system/components/MyAppGuideBlock.dart';
 import 'package:ev_charging_operation_system/components/SignUp/Widget_of_Name.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,14 @@ bool inkmisclicked = false;
 bool chargertypeisclicked = false;
 bool bussinessisclicked = false;
 
-final List<String> _dropdownValueslm = ["범위", "1km", "5km", "10km", "20km","30km"];
+final List<String> _dropdownValueslm = [
+  "범위",
+  "1km",
+  "5km",
+  "10km",
+  "20km",
+  "30km"
+];
 
 final List<String> _dropdownValues = ["충전기", "1대이상", "1대이상", "1대이상", "상관없음"];
 
@@ -32,6 +40,9 @@ class HomeScreen extends StatefulWidget {
 
 class _MyScreenState extends State<HomeScreen> {
   String datafilter = '';
+  String parkingfee = '';
+  String chargespeed = '';
+  String availablenow = '';
   List<MyData> myDataList = [];
   bool isLoading = false;
   bool isFilter = false;
@@ -85,7 +96,7 @@ class _MyScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> fetchFilterData(String filter) async {
+  Future<void> fetchFilterData(String filter, String parkingfee, String chargespeed, String availablenow) async {
     setState(() {
       isLoading = true;
     });
@@ -98,7 +109,10 @@ class _MyScreenState extends State<HomeScreen> {
           queryParameters: {
             'lat1': '37.52126',
             'lon1': '126.91327',
-            'filter': filter
+            'filter': filter,
+            'parkingfee' : parkingfee,
+            'speedcharge' : chargespeed,
+            'cntavaliable' : availablenow
           });
       setState(() {
         myDataList = List<MyData>.from(
@@ -255,12 +269,14 @@ class _MyScreenState extends State<HomeScreen> {
                       child: DropDownWidget(
                         isclicked: inkmisclicked,
                         function: () {
-                          setState(() {
-                            distanceisopen = Distanceisopen.open;
-                          });
+
                           return showMyDialogerror(context);
                         },
-                        title: '범위',
+                        title: '범위', arrowfunction: (){
+                        setState(() {
+                          distanceisopen = Distanceisopen.open;
+                        });
+                      },
                       )),
                   const SizedBox(width: 20),
                   Expanded(
@@ -269,15 +285,14 @@ class _MyScreenState extends State<HomeScreen> {
                         isclicked: chargertypeisclicked,
                         function: () {
                           setState(() {
-                            if (!chargertypeisclicked) {
-                              chargertypeisclicked = true;
-                            }
+
                           });
                           // return showDialog(
                           //   return null
                           // );
                         },
                         title: '충전기',
+                        arrowfunction: (){},
                       )),
                   const SizedBox(width: 20),
                   Expanded(
@@ -286,15 +301,11 @@ class _MyScreenState extends State<HomeScreen> {
                         isclicked: bussinessisclicked,
                         function: () {
                           setState(() {
-                            if (bussinessisclicked) {
-                              bussinessisclicked = false;
-                            } else {
-                              bussinessisclicked = true;
-                            }
                           });
                           // return showalertfiltersettings(context);
                         },
                         title: '사업자',
+                        arrowfunction: (){}
                       ))
                 ]),
               ),
@@ -334,7 +345,7 @@ class _MyScreenState extends State<HomeScreen> {
                                             child: Text(myData.chargename,
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 15,
+                                                    fontSize: 16,
                                                     fontFamily: "InterSemiBold",
                                                     fontWeight:
                                                         FontWeight.w600))),
@@ -343,7 +354,7 @@ class _MyScreenState extends State<HomeScreen> {
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontFamily: "InterSemiBold",
-                                                fontSize: 15,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w100)),
                                       ],
                                     ),
@@ -381,7 +392,7 @@ class _MyScreenState extends State<HomeScreen> {
                                           width: 10,
                                         ),
                                         ChargeStationInfoContainer(
-                                          title: '충전요금',
+                                          title: '주자요금',
                                           value: myData.chargefee,
                                           value_f: '',
                                         ),
@@ -748,36 +759,75 @@ class _MyScreenState extends State<HomeScreen> {
                                   isclicked17 = isclicked8;
                                   isclicked18 = isclicked9;
 
-                                  if ([
-                                    isclicked1,
-                                    isclicked2,
-                                    isclicked3,
-                                    isclicked4
-                                  ].any((element) => true)) {
-                                    print('checked');
+                                  if (isclicked14 && !isclicked15){
+                                     chargespeed = '완속';
+                                  } else if (!isclicked14 && isclicked15){
+                                    chargespeed = '급속';
                                   } else {
-                                    print('not checked');
+                                    chargespeed = '';
                                   }
-                                  if (isclicked10) {
-                                    fetchFilterData('DC콤보');
-                                    datafilter = 'DC콤보';
-                                    print('DC콤보');
-                                    if (isclicked10 && isclicked11) {
-                                      datafilter = 'DC콤보' + ',' + 'DC차데모';
-                                      fetchFilterData(datafilter);
-                                    }
-                                  } else if (isclicked11) {
-                                    fetchFilterData('DC차데모');
-                                    datafilter = 'DC차데모';
-                                  } else if (isclicked13) {
-                                    fetchFilterData('AC3상');
-                                  } else if (isclicked12) {
-                                    fetchFilterData('AC완속');
+
+                                  if (isclicked18){
+                                    availablenow = '1';
+                                  }
+
+                                  if (isclicked16 && !isclicked17){
+                                    parkingfee = '유료';
+                                  } else if (!isclicked16 && isclicked17){
+                                    parkingfee = '무료';
                                   } else {
+                                    parkingfee = '';
+                                  }
+                                  print(parkingfee);
+
+                                  if (!isclicked10 && !isclicked11 && !isclicked12 && isclicked13 ) {
+                                    datafilter = 'AC3상';
+                                  } else if (!isclicked10 && !isclicked11 && isclicked12 && !isclicked13){
+                                    datafilter = 'AC완속';
+                                  }
+                                  else if (!isclicked10 && isclicked11 && !isclicked12 && isclicked13){
+                                    datafilter = 'DC차데모,AC3상';
+                                  }
+                                  else if (!isclicked10 && isclicked11 && !isclicked12 && isclicked13){
+                                    datafilter = 'DC차데모,AC3상,DC차데모+AC3상';
+                                  }
+                                  else if (!isclicked10 && isclicked11 && isclicked12 && !isclicked13){
+                                    datafilter = 'DC차데모,AC완속';
+                                  }
+                                  else if (!isclicked10 && isclicked11 && isclicked12 && isclicked13){
+                                    datafilter = 'DC차데모,AC완속,AC3상';
+                                  }
+                                  else if (isclicked10 && !isclicked11 && !isclicked12 && isclicked13){
+                                    datafilter = 'DC콤보,AC3상';
+                                  }
+                                  else if (isclicked10 && !isclicked11 && isclicked12 && !isclicked13){
+                                    datafilter = 'DC콤보,AC완속';
+                                  }
+                                  else if (isclicked10 && !isclicked11 && isclicked12 && isclicked13){
+                                    datafilter = 'DC콤보,AC완속,AC3상';
+                                  }
+                                  else if (isclicked10 && isclicked11 && !isclicked12 && !isclicked13){
+                                    datafilter = 'DC콤보,DC차데모,DC차데모+DC콤보';
+                                  }
+                                  else if (isclicked10 && isclicked11 && !isclicked12 && isclicked13){
+                                    datafilter = 'DC콤보,DC차데모,AC3상,DC차데모+AC3상+DC콤보';
+                                  }
+                                  else if (isclicked10 && isclicked11 && isclicked12 && !isclicked13){
+                                    datafilter = 'DC콤보,DC차데모,AC완속';
+                                  }
+                                  else if (!isclicked10 && isclicked11 && !isclicked12 && !isclicked13){
+                                    datafilter = 'DC차데모';
+                                  }
+                                  else if (isclicked10 && !isclicked11 && !isclicked12 && !isclicked13){
+                                    datafilter = 'DC콤보';
+                                  }
+                                  else {
                                     fetchData();
                                     datafilter = '';
                                   }
-                                  print(datafilter);
+
+                                  print(datafilter + ',' + parkingfee );
+                                  fetchFilterData(datafilter,parkingfee,chargespeed,availablenow);
                                 });
                               });
                             },
@@ -1043,13 +1093,14 @@ class DropDownWidget extends StatefulWidget {
       {super.key,
       required this.title,
       required this.function,
-      required this.isclicked});
+      required this.isclicked, required this.arrowfunction});
 
   @override
   State<DropDownWidget> createState() => _DropDownWidgetState();
 
   final String title;
   final Function function;
+  final Function arrowfunction;
   final bool isclicked;
 }
 
@@ -1058,14 +1109,13 @@ class _DropDownWidgetState extends State<DropDownWidget> {
 
   //The list of values we want on the dropdown
 
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         widget.function();
       },
       child: Container(
-        height: 30,
+        height: 40,
         padding: EdgeInsets.symmetric(horizontal: 10.0),
         decoration: BoxDecoration(
           color: distanceisopen == Distanceisopen.open
@@ -1073,28 +1123,45 @@ class _DropDownWidgetState extends State<DropDownWidget> {
               : Color(0xff26303F),
           borderRadius: BorderRadius.circular(15.0),
           border: Border.all(
-              color: Color(0xff71809B), style: BorderStyle.solid, width: 2),
+            color: Color(0xff71809B),
+            style: BorderStyle.solid,
+            width: 2,
+          ),
         ),
         child: Center(
-            child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              widget.title,
-              style: TextStyle(
-                color: distanceisopen == Distanceisopen.open
-                    ? Colors.white
-                    : Color(0xff71809B),
-                fontWeight: FontWeight.w600,
-                fontFamily: "InterSemiBold",
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: distanceisopen == Distanceisopen.open
+                        ? Colors.white
+                        : Color(0xff71809B),
+                    fontWeight: FontWeight.w600,
+                    fontFamily: "InterSemiBold",
+                  ),
+                ),
               ),
-            ),
-            const Icon(Icons.arrow_drop_down)
-          ],
-        )),
+              Align(
+                alignment: Alignment.center,
+                child: IconButton(
+                  onPressed: () {
+                    widget.arrowfunction();
+                  },
+                  icon: Icon(Icons.keyboard_arrow_down),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
+
 }
 
 Future<Future<Distance?>> showMyDialogerror(BuildContext context) async {
@@ -1370,10 +1437,6 @@ Future<Future<Distance?>> showMyDialogerror(BuildContext context) async {
   );
 }
 
-
-
-
-
 // class FilterValue extends StatefulWidget {
 //   const FilterValue({
 //     super.key, required this.function, required this.text, required this.sdsd,
@@ -1427,4 +1490,3 @@ Future<Future<Distance?>> showMyDialogerror(BuildContext context) async {
 //     );
 //   }
 // }
-

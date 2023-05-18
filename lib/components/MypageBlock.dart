@@ -17,6 +17,9 @@ import '../networking/networking.dart';
 import '../screens/LoadingScreen.dart';
 import 'CardRegisterBlock.dart';
 import 'MyPage/Main/NavigatorContainer.dart';
+import 'MyPage/changeBankCard/infocardpassword.dart';
+import 'MyPage/changeBankCard/infoexpiredate.dart';
+import 'MyPage/change_charge/Info_Widget_Input_CardNumber.dart';
 import 'MyPage/title/ChargeCardInfo.dart';
 import 'MyPage/changeBankCard/cancel_bank_button.dart';
 import 'MyPage/changeBankCard/change_bank_button.dart';
@@ -347,25 +350,70 @@ class _MyPageBlockState extends State<MyPageBlock> {
                 SizedBox(height:screenWidth > 900 ? 50 :  30),
                 My_page_title(title: cardnumber == 0 ?  '결제카드 등록': '결제카드 변경'),
                 SizedBox(height: 20,),
-                ChangeInfoBankContainer(
-                  id: email,
-                  name: name,
-                  phone: phone,
-                  carNumber: car,
-                  birth: birth,
-                  gender: gender,
-                ),
+                // ChangeInfoBankContainer(
+                //   id: email,
+                //   name: name,
+                //   phone: phone,
+                //   carNumber: car,
+                //   birth: birth,
+                //   gender: gender,
+                // ),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          decoration:
+          BoxDecoration(border: Border.all(width: 1, color: Color(0xff323b4f))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              // Info_Widget_Input_Card_Number(
+              //     borderSide: BorderSide(width: 1, color: Color(0xff323b4f)),
+              //     title: '카드번호',
+              //     value: '교통카드'),
+              Info_Widget_Input_Card_Numberx4(
+                  borderSide: BorderSide(width: 1, color: Color(0xff323b4f)),
+                  title: '카드번호',
+                  value: '교통카드'),
+              Info_Widget_Input_Card_Expire(
+                  borderSide: BorderSide(width: 1, color: Color(0xff323b4f)),
+                  title: '유효기간',
+                  value: '교통카드'),
+              Info_Widget_Input_Card_Password(
+                  borderSide: BorderSide.none,
+                  title: '카드 비밀번호 앞 2자리',
+                  value: '교통카드'),
+            ],
+          ),
+        ),
                 SizedBox(height: 20),
                 ChangeButtonCard(titletext: cardnumber == 0 ? '등록하기' : '변경하기', function: ()
                 async {
-                  String cardnumber = provider.creditCardNumber.replaceAll('-','');
+                  // String cardnumber = provider.creditCardNumber.replaceAll('-','');
                   String creditCardExpireMonth = provider.creditCardExpireMonth;
                   String creditCardExpireYear = provider.creditCardExpireYear;
                   String creditCardpassword = provider.creditCardpassword;
                   String bithday = provider.bithdaty;
                   String error = '';
+
+                  String cn1 = provider.creditcardregistnumber1;
+                  String cn2 = provider.creditcardregistnumber2;
+                  String cn3 = provider.creditcardregistnumber3;
+                  String cn4 = provider.creditcardregistnumber4;
+
+                  String cardnumber = cn1+cn2+cn3+cn4;
+                  print(cardnumber);
+                  print(creditCardExpireMonth);
+                  print(creditCardExpireYear);
+                  print(creditCardpassword);
+                  print(bithday);
+
                   NetworkHelper networkHelper = NetworkHelper();
                   await networkHelper.changeCard(provider,context,cardnumber,creditCardExpireYear,creditCardExpireMonth,creditCardpassword,bithday,error);
+
+                  provider.setcreditcardregistnumber1('');
+                  provider.setcreditcardregistnumber2('');
+                  provider.setcreditcardregistnumber3('');
+                  provider.setcreditcardregistnumber4('');
 
                 },),
                 SizedBox(height: 20),

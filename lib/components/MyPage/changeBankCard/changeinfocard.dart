@@ -11,7 +11,7 @@ import 'infocardpassword.dart';
 import 'infoexpiredate.dart';
 import '../change_charge/Info_Widget_Input_CardNumber.dart';
 
-class ChangeInfoBankContainer extends StatelessWidget {
+class ChangeInfoBankContainer extends StatefulWidget {
   const ChangeInfoBankContainer({
     required this.id,
     required this.name,
@@ -28,18 +28,40 @@ class ChangeInfoBankContainer extends StatelessWidget {
   final String birth;
   final String gender;
 
+  @override
+  State<ChangeInfoBankContainer> createState() => _ChangeInfoBankContainerState();
+}
+
+class _ChangeInfoBankContainerState extends State<ChangeInfoBankContainer> {
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+    });
+  }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 40),
+      margin: EdgeInsets.symmetric(horizontal: 10),
       decoration:
       BoxDecoration(border: Border.all(width: 1, color: Color(0xff323b4f))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Info_Widget_Input_Card_Number(
+          // Info_Widget_Input_Card_Number(
+          //     borderSide: BorderSide(width: 1, color: Color(0xff323b4f)),
+          //     title: '카드번호',
+          //     value: '교통카드'),
+          Info_Widget_Input_Card_Numberx4(
               borderSide: BorderSide(width: 1, color: Color(0xff323b4f)),
               title: '카드번호',
               value: '교통카드'),

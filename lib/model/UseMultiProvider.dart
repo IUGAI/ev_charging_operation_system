@@ -56,6 +56,13 @@ class DataMulti extends ChangeNotifier {
   String _postalcode = '';
   String _address =  '';
 
+
+
+  String _creditcardregistnumber1 = '';
+  String _creditcardregistnumber2 = '';
+  String _creditcardregistnumber3 = '';
+  String _creditcardregistnumber4 = '';
+
   DataMulti(
       this._id,
       this._password,
@@ -70,6 +77,12 @@ class DataMulti extends ChangeNotifier {
       this._accestokken,
       this._Currentuser,
       this._data);
+
+
+  String get creditcardregistnumber1 => _creditcardregistnumber1;
+  String get creditcardregistnumber2 => _creditcardregistnumber2;
+  String get creditcardregistnumber3 => _creditcardregistnumber3;
+  String get creditcardregistnumber4 => _creditcardregistnumber4;
 
   String get postalcode => _postalcode;
   String get adress => _address;
@@ -134,6 +147,24 @@ class DataMulti extends ChangeNotifier {
   String get verificationidcard => _verificationidcard;
   String get verificationgender => _verificationgender;
   String get verificationmobileno => _verificationmobileno;
+
+
+  void setcreditcardregistnumber1(String newvalue){
+    _creditcardregistnumber1 = newvalue;
+    notifyListeners();
+  }
+  void setcreditcardregistnumber2(String newvalue){
+    _creditcardregistnumber2 = newvalue;
+    notifyListeners();
+  }
+  void setcreditcardregistnumber3(String newvalue){
+    _creditcardregistnumber3 = newvalue;
+    notifyListeners();
+  }
+  void setcreditcardregistnumber4(String newvalue){
+    _creditcardregistnumber4 = newvalue;
+    notifyListeners();
+  }
 
   void setpostalcode(String newvalue){
     _postalcode = newvalue;

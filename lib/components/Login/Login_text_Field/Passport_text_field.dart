@@ -61,7 +61,7 @@ class _TextFieldWidgetState extends State<PassportFieldWidget> {
           obscureText: widget.isPassword,
           cursorColor: Colors.white,
           controller: widget.passwordController,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           textAlign: TextAlign.left,
           style: TextStyle(color: Colors.white, fontSize: screenWidth > 900 || screenWidth > 600 ? 22: 15),
           decoration: InputDecoration(

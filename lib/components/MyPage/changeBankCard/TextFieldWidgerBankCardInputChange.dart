@@ -4,23 +4,25 @@ import 'package:ev_charging_operation_system/constant/constant.dart';
 import 'package:provider/provider.dart';
 import '../../../model/UseMultiProvider.dart';
 
-class TextFieldWidget_Bank_Card_input extends StatefulWidget {
-  const TextFieldWidget_Bank_Card_input({
+class TextFieldWidget_Bank_Card_input_x4 extends StatefulWidget {
+  const TextFieldWidget_Bank_Card_input_x4({
     Key? key,
     required this.passwordController,
     required this.hintextl,
-    required this.isPassword
+    required this.isPassword, required this.obscureText, required this.function
   }) : super(key: key);
 
   final TextEditingController passwordController;
   final hintextl;
   final bool isPassword;
+  final bool obscureText;
+  final Function function;
 
   @override
   _TextFieldWidget_CardState createState() => _TextFieldWidget_CardState();
 }
 
-class _TextFieldWidget_CardState extends State<TextFieldWidget_Bank_Card_input> {
+class _TextFieldWidget_CardState extends State<TextFieldWidget_Bank_Card_input_x4> {
   @override
   void initState() {
     // TODO: implement initState
@@ -47,7 +49,7 @@ class _TextFieldWidget_CardState extends State<TextFieldWidget_Bank_Card_input> 
         ),
       ),
       child: TextFormField(
-        maxLength: 19, // include the hyphens
+        maxLength: 4, // include the hyphens
         buildCounter: (BuildContext context,
             {int? currentLength, int? maxLength, bool? isFocused}) {
           if (currentLength == maxLength) {
@@ -58,10 +60,10 @@ class _TextFieldWidget_CardState extends State<TextFieldWidget_Bank_Card_input> 
             width: 0,
           );
         },
-        obscureText: widget.isPassword,
+        obscureText: widget.obscureText,
         cursorColor: Colors.white,
         controller: widget.passwordController,
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.visiblePassword,
         textAlign: TextAlign.left,
         style: TextStyle(color: Colors.white , fontSize:  screenWidth > 900 || screenWidth > 600 ? 20 : 15),
         decoration: InputDecoration(
@@ -71,27 +73,8 @@ class _TextFieldWidget_CardState extends State<TextFieldWidget_Bank_Card_input> 
           contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
         ),
         onChanged: (value) {
-          value = widget.passwordController.text;
-          // Remove all non-digit characters from the string
-          setState(() {
-            String digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
 
-            // Split the digits into groups of four and join with hyphens
-            String formattedText = digitsOnly.replaceAllMapped(
-                RegExp(r'.{1,4}'), (match) => "${match.group(0)}-");
-
-            // Remove the last hyphen if the text ends with one
-            formattedText = formattedText.replaceAllMapped(
-                RegExp(r'-$'), (match) => "");
-
-            // Update the text in the text field
-            widget.passwordController.value = TextEditingValue(
-              text: formattedText,
-              selection: TextSelection.collapsed(offset: formattedText.length),
-
-            );
-            // stringprovider.setchangebankcardnumber(value);
-          });
+          widget.function(value);
 
         },
       ),
